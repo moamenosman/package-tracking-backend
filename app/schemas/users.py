@@ -66,3 +66,14 @@ class UserResponse(BaseModel):
     role: UserRole
     active: bool
     created_at: datetime
+
+
+class MessageResponse(BaseModel):
+    message: str
+
+
+class CourierListResponse(BaseModel):
+    items: list[UserResponse]
+    total: int
+    page: int
+    page_size: int
