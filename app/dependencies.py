@@ -43,3 +43,42 @@ def require_admin( current_user: UserResponse = Depends(get_current_user), ) -> 
         )
 
     return current_user
+
+
+def require_user(
+    current_user: UserResponse = Depends(get_current_user),
+) -> UserResponse:
+    if current_user.role != UserRole.USER:
+        raise HTTPException(
+            status_code=403,
+            detail="Business-owner access required.",
+        )
+
+    return current_user
+
+
+def require_courier(
+    current_user: UserResponse = Depends(get_current_user),
+) -> UserResponse:
+    if current_user.role != UserRole.COURIER:
+        raise HTTPException(
+            status_code=403,
+            detail="Courier access required.",
+        )
+
+    return current_user
+
+
+def require_courier_or_admin(
+    current_user: UserResponse = Depends(get_current_user),
+) -> UserResponse:
+    if current_user.role not in {
+        UserRole.COURIER,
+        UserRole.ADMIN,
+    }:
+        raise HTTPException(
+            status_code=403,
+            detail="Courier or admin access required.",
+        )
+
+    return current_user

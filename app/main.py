@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from pymongo.database import Database
 from pymongo.errors import PyMongoError
 from starlette.middleware.sessions import SessionMiddleware
+from app.routers.orders import router as orders_router
 
 from app.config import get_settings
 from app.database import create_mongo_client, get_database
@@ -122,3 +123,4 @@ def check_readiness( database: Database = Depends(get_database), ):
 
 
 app.include_router(identity_router)
+app.include_router(orders_router)
